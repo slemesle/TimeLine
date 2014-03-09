@@ -3,6 +3,26 @@ var logs = [];
 var keys = [];
 
 
+function buildKey(proposal){
+    var key ='';
+    key += proposal.passengers[0].age;
+    key += '-'+ proposal.passengers[0].cards;
+    key += '-' + proposal.inward;
+    key += '-' + proposal.segments[0].quotes[0].returnMandatory;
+
+    return key;
+}
+
+function pushKeyFor(key){
+    if (keysMap[key] == undefined) {
+        keysMap[key] = {count:1, key:key, active:''};
+    } else {
+        keysMap[key].count++;
+    }
+}
+
+
+
 function logCtrl ($scope, $sce) {
 
     $scope.logs = logs;
@@ -83,6 +103,39 @@ function logCtrl ($scope, $sce) {
         }
         return res;
     }
+
+
+
+    $scope.keys = keys;
+    $scope.selected = [];
+
+    $scope.$watchCollection('keys', function(newNames, oldNames) {
+        $scope.dataCount = newNames.length;
+    });
+
+    $scope.activeKeyClass = function (key) {
+
+        if (key["active"] == undefined){
+            key["active"] = false;
+            return '';
+        } else {
+
+            return key["active"] ? "active" : '';
+        }
+    }
+
+    $scope.clickKey= function(key){
+        if (key["active"] == ''){
+            key["active"] = 'active';
+            $scope.selected.push(key.key);
+        } else {
+            key["active"] = '';
+            _.remove ($scope.selected,  function(k) {
+                return k == key.key;
+            })
+        }
+
+    }
 }
 
 function headerCtrl($scope){
@@ -98,11 +151,3 @@ function headerCtrl($scope){
 }
 
 
-function keysCtrl($scope){
-    $scope.keys = keys;
-
-    $scope.$watchCollection('keys', function(newNames, oldNames) {
-        $scope.dataCount = newNames.length;
-    });
-
-}
