@@ -20,7 +20,7 @@ ul.timeline {
 ul.timeline li.diff div {
     float: left;
     width: 49.75%;
-    padding: 0.5%;
+    padding: 10px;
 }
 
 ul.timeline li.log {

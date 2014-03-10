@@ -88,7 +88,7 @@ sed  -e 's/^.* MinDay - /logs.push({msg:"/g'  -e 's/) input\:/\", input\:/g' -e 
         <div class="col-md-12">
 
 
-            <ul class="timeline lead">
+            <ul class="timeline ">
 
                 <li class="date" ng-repeat-start="log in logs | key:selected">
                     <h3 class="label label-info lead">{{log.input.logDate}}</h3>
@@ -97,7 +97,7 @@ sed  -e 's/^.* MinDay - /logs.push({msg:"/g'  -e 's/) input\:/\", input\:/g' -e 
                     <div class="text-right">
                         <h2 class="label label-primary text-center" >INPUT</h2>
                         <p><span class="label label-default">Log Date</span> {{log.input.logDate}}</p>
-                        <p><span class="label label-default">Id Aq</span> {{log.input.idAq}}</p>
+                        <p><span class="label label-default">Id Aq</span> {{log.input.idAq|limitTo:30}}</p>
                         <p><span class="label label-default">Age</span> {{log.input.passengers[0].age}}</p>
                         <p><span class="label label-default">Card</span> {{log.input.passengers[0].cards}}</p>
                         <p><span class="label label-default">Inward</span> {{log.input.inward}}</p>
@@ -106,11 +106,12 @@ sed  -e 's/^.* MinDay - /logs.push({msg:"/g'  -e 's/) input\:/\", input\:/g' -e 
                         <p><span class="label label-default">Stock</span> {{log.input.stock}}</p>
                         <p><span class="label label-default">Price</span> {{log.input.totalPrice}}</p>
                         <p><span class="label label-default">Class</span> {{log.input.segments[0].physicalSpace}}</p>
+                        <p>&nbsp;</p>
                     </div>
                     <div class="text-left">
                         <h2 class="label label-primary text-center">FOUND</h2>
                         <p>{{log.found.logDate}}</p>
-                        <p>{{log.found.idAq}} <span class="label label-warning">{{log.found.count}}</span> </p>
+                        <p>{{log.found.idAq|limitTo:15}} <span class="label label-warning">{{log.found.count}}</span> </p>
                         <p>{{log.found.passengers[0].age}} <span class="label label-{{diffLabel(log.found.passengers[0].age, log.input.passengers[0].age)}}">*</span></p>
                         <p>{{log.found.passengers[0].cards}} <span class="label label-{{diffLabel(log.found.passengers[0].cards, log.input.passengers[0].cards)}}">*</span></p>
                         <p>{{log.found.inward}} <span class="label label-{{diffLabel(log.found.inward, log.input.inward)}}">*</span></p>
