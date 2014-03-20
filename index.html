@@ -66,7 +66,18 @@
                 <h2> Select logs and transform output to Java Script</h2>
                  <pre>
 zgrep MinDay ./diff.log/aqmiproposals-diff.log* >./diff-min-day.log
-sed  -e 's/^.* MinDay - /logs.push({msg:"/g'  -e 's/) input\:/\", input\:/g' -e 's/found\:/,found:/g'  -e 's/\}$/}});/g' ./diff-min-day.log | grep '"od":"FRPLY-FRLPD"' | grep '"departureDate":"20140202'  > diff-min-day.json
+sed  -e 's/^.* MinDay - /logs.push({msg:"/g'  -e 's/ input\:/\", input\:/g' -e 's/found\:/,found:/g'  -e 's/\}$/}});/g' ./diff-min-day.log | grep '"od":"FRPLY-FRLPD"' | grep '"departureDate":"20140202'  > diff-min-day.json
+                 </pre>
+            </div>
+            <div class="well-lg">
+                <h2>Choose an OD and date to analyse</h2>
+                 <pre>
+# Diff count per OD
+grep -o '"od":"[A-Z]\+-[A-Z]\+"' /tmp/diff-min-day.log | sort | uniq -c | sort
+# Diff count per OD per date with a selected OD
+grep '"od":"FRPMO-FRBOJ"' /tmp/diff-min-day.log  | grep -o '"departureDate":"[0-9]\{8\}'  | sort | uniq -c | sort -n
+# Generate Javascript Diff file on selected Diff
+sed  -e 's/^.* MinDay - /logs.push({msg:"/g'  -e 's/ input\:/\", input\:/g' -e 's/found\:/,found:/g'  -e 's/\}$/}});/g'  /tmp/diff-min-day.log  | grep '"od":"FRPMO-FRBOJ"' | grep '"departureDate":"20140222'
                  </pre>
             </div>
         </div>
@@ -97,7 +108,7 @@ sed  -e 's/^.* MinDay - /logs.push({msg:"/g'  -e 's/) input\:/\", input\:/g' -e 
                     <div class="text-right">
                         <h2 class="label label-primary text-center" >INPUT</h2>
                         <p><span class="label label-default">Log Date</span> {{log.input.logDate}}</p>
-                        <p><span class="label label-default">Id Aq</span> {{log.input.idAq|limitTo:30}}</p>
+                        <p><span class="label label-default">Id Aq</span> {{log.input.idAq|limitTo:15}}</p>
                         <p><span class="label label-default">Age</span> {{log.input.passengers[0].age}}</p>
                         <p><span class="label label-default">Card</span> {{log.input.passengers[0].cards}}</p>
                         <p><span class="label label-default">Inward</span> {{log.input.inward}}</p>

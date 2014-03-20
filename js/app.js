@@ -7,8 +7,12 @@ function buildKey(proposal){
     var key ='';
     key += proposal.passengers[0].age;
     key += '-'+ proposal.passengers[0].cards;
-    key += '-' + proposal.inward;
     key += '-' + proposal.segments[0].quotes[0].returnMandatory;
+
+    if (proposal.segments[0].quotes[0].returnMandatory){
+        key += '-' + proposal.inward;
+    }
+    key += '-' + proposal.totalPrice;
 
     return key;
 }
